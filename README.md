@@ -1,6 +1,6 @@
 # SHOTGUN PIPELINE
 
-## Explanation of the scripts in modules/ in the order of execution
+## Explanation of the scripts in modules/ folder in the order of execution
 
 ### 1_read_preprocessing.sh 
 
