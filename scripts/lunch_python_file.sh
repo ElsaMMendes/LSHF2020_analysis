@@ -1,14 +1,5 @@
 #!/bin/bash
 
-#SBATCH -A feob_iron_oxidizing_bacteria_
-#SBATCH --job-name=paths
-#SBATCH --partition fast
-#SBATCH --mem 20GB
-#SBATCH --cpus-per-task=10
-#SBATCH --output=/shared/projects/feob_iron_oxidizing_bacteria_//META/ANALYSIS_MG/4_genes_contigs/jobLog_pathway_article-%j.out
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=elsa.mendes@mio.osupytheas.fr
-
 for file in metabolism_kegg_path_lists/*; do
     filename=$(basename "$file")
     ./keggPathway_abundanceV2-pathway.py CAP20-A CAP20 "$filename"

@@ -1,19 +1,21 @@
-# SHOTGUN PIPELINE
+# 1- SHOTGUN metagenomics PIPELINE
+
+| dev by Elsa Mendes
 
 ## Explanation of the scripts in modules/ folder in the order of execution
 
 ### 1_read_preprocessing.sh 
 
-HPC resources used: 20GB RAM (--mem) et 12 CPU (--cpus-per-task)
+| HPC resources used: 20GB RAM (--mem) and 12 CPU (--cpus-per-task)
 
 Script runned one time (all samples treated at once) to clean our illumina short paired-end reads using the read trimming tool called trimmomatic. The script produced FASTQC reports before and after the procedure (as well as 2 MULTIQC reports to concise all samples cleaning information). **The raw read files were named in the name_R1.fastq.gz/name_R2.fastq.gz convention**. The adapters file used for trimmomatic tool: /shared/software/miniconda/pkgs/trimmomatic-0.39-1/share/trimmomatic-0.39-1/adapters/TruSeq3-PE-2.fa
 
 
 ###  2_assembly.sh
 
-HPC resources used:  250GB RAM et 40 CPU
+| HPC resources used:  250GB RAM and 40 CPU
 
-Lauched script for each (co-)assembly and associated structural annotaon 
+Launched script for each (co-)assembly and associated structural annotaon 
 
 This step needs to be seriously reflected on because of memory requirement
 issues linked to amount of data. Reflect if you want to do a co-assembly or not , if yes reflect on how you do it. 
@@ -21,7 +23,7 @@ issues linked to amount of data. Reflect if you want to do a co-assembly or not 
 
 ### 3_mapping.sh
 
-130 RAM et 20 cpus 
+| HPC resources used: 130 RAM and 20 cpus 
 
 $nom_analyse_reads and $nom_analyse_index usually same but separated because if you could want to align reads from other analysis to the contigs (e.g. metaT to metaG ... )
 
@@ -34,17 +36,19 @@ parameters explained:
 
 ### 4_diamond_alignement.sh
 
-220 et 16
+| HPC resources used:  220 and 16
 
-parameters explained: 
+To prepare for taxonomic annotation of contigs. parameters explained: 
 - $nom_analyse: //
 - $protein_file : path to protein file you want to analyse 
 - $site : same as meta_id 
-then: 
+
 
 ### 4_CAT.sh
 
-100 et 16 cpu 
+| HPC resources used:  100 RAM and 16 cpu 
+
+To launch taxonomic annotation of contigs
 
 parameters explained: 
 -$nom_analyse : //
@@ -56,20 +60,46 @@ parameters explained:
 -$site : same as meta_id 
 
 ### 4_genes_contigs.sh
+| HPC resources used: 250 and 12 cpu
 
-250 et 12 cpou
+Script to launch  eggnogMapper tool, to have a broad functionnal annoation of the contigs. was also made a fonctionnal annotation of the contigs with kofamscan tool,  FeGenie and barrnap. 
+
 only give $nom_analyse and $meta_id and $protein_file
 
-### 5_binning.sh then  5_bin_refinement.sh then  5_genes_mag.sh & then 5_metabolic.sh
+### 5_binning.sh 
 
-only give $nom_analyse and $meta_id 
+| HPC resources used : 40GB RAM and 16 CPU
 
-binning= 40GB RAM et 16 CPU
-refinement = 40 et 16
-genes mag = 150 et 20
+To Launch  binning with 3 different tools (maxBin, metabat2 & concoct)
 
---seed 12345 
+Only give $nom_analyse and $meta_id 
+
+
+### 5_bin_refinement.sh 
+
+| HPC resources used :40 RAM and 16 CPU
+
+To make a consensus non redundant bin set made from the 3 sets created with previous script. 
+
+
+
+### 5_genes_mag.sh
+| HPC resources used :150 RAM and 20 CPU
+
+to launch  GTDB-TK taxonomic annotation of the MAGs, as well as prokka general functional annotation
+
+
+
+### 5_metabolic.sh
+| HPC resources used :220 RAM and 50 CPU
+
+To launch  METABOLIC tool 
+
+
 
 ## Explanation of the scripts/ folder
 
-you can find custom scripts linked to metabolic outputs treatment as well as the script to make pmoA/mmoA tree for verification of metabolic tool annotation. also you can find custom scripts linked to kofamscan output treatment.
+you can find custom scripts linked to METABOLIC tool outputs treatment (*change_resultsWorsheet1.py* , *matrice_magGenesV2.py* )as well as the script to make pmoA/mmoA tree for verification of annotation (*5_verif_metabolicAnnotations_2026revision.sh*). 
+
+also you can find custom scripts linked to kofamscan output treatment to extract a pathway-kegg table from the raw tool results(*lunch_python_file.sh*,  *keggPathway_abundanceV2-pathway.py*).
+

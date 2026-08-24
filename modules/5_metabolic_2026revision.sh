@@ -1,15 +1,5 @@
 #!/bin/bash
 
-#SBATCH -A feob_iron_oxidizing_bacteria_
-#SBATCH --job-name=metabolic
-#SBATCH --mem 220GB
-#SBATCH --cpus-per-task=50
-#SBATCH --partition long
-#SBATCH --output=/shared/projects/feob_iron_oxidizing_bacteria_/jobLog_metabolic-%j.out
-#SBATCH --mail-type=ALL
-#SBATCH --mail-user=elsa.mendes@mio.osupytheas.fr
-
-
 path_genomes=$1
 #[path_to_folder_with_genome_files_of_a_previous_run] 
 output_name=$2
