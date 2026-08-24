@@ -1,4 +1,4 @@
-# 1- SHOTGUN metagenomics PIPELINE
+# 1- Shotgun metagenomics pipeline
 
 | dev by Elsa Mendes
 
@@ -103,3 +103,8 @@ you can find custom scripts linked to METABOLIC tool outputs treatment (*change_
 
 also you can find custom scripts linked to kofamscan output treatment to extract a pathway-kegg table from the raw tool results(*lunch_python_file.sh*,  *keggPathway_abundanceV2-pathway.py*).
 
+# 2- About scripts_R/ folder
+
+| dev by Céline Rommevaux and Alain Dolla
+
+R scripts and associated input data used to carry out the statistical and diversity analysis, RDAs and PCOAs.
